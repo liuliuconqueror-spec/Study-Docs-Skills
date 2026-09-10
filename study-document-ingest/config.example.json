@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "vault_path": null,
+  "default_mode": "quality",
+  "default_course_fallback": "_Inbox",
+  "source_retention": "reference",
+  "publish_enabled": true,
+  "publication_root": "课程资料"
+}

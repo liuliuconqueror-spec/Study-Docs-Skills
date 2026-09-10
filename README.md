@@ -119,4 +119,3 @@ python -m unittest discover -s .\study-source-reader\tests -p 'test_*.py'
 ```
 
 卸载脚本只删除这两个已安装 Skill。它故意保留 `~/.codex/study-docs` 中的目录、缓存和配置，避免误删学习资料。
-

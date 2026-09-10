@@ -1,0 +1,47 @@
+# Python bytecode and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.token
+*.secret
+
+# Study Docs runtime state (must never be published)
+.study-docs/
+study-docs/
+**/.study-docs/
+**/staging/
+**/logs/
+**/normalized/
+catalog.json
+failure.json
+
+# Course and generated document artifacts
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.bmp
+*.gif
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
