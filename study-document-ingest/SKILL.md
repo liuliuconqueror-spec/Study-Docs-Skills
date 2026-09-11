@@ -22,6 +22,12 @@ only when automatic discovery does not match the installation.
 
 Quality mode is the default. PDFs go directly to MinerU cloud + API auto + VLM. On Windows, quality-mode PPTX is first normalized locally to PDF using an isolated Microsoft PowerPoint native export (preferred) or LibreOffice headless export; absence of both is a pre-MinerU failure. The validated derivative is retained only in the cache. MinerU's installed local chunking module then derives profiled chunks from cached Markdown. MinerU's native split path is used when the active page limit requires it.
 
+## Cloud-consent boundary
+
+Explicitly providing files and requesting ingestion constitutes consent to send uncached documents to the configured MinerU cloud parser. For normal `quality` ingestion, including an unspecified mode that resolves to the default `quality` profile, do not request a second confirmation solely because an explicitly uploaded, selected, or provided source is uncached—provided the user explicitly asked to ingest or import it into a course and the operation only parses, caches, and optionally publishes course source material. A compatible cache hit sends nothing to cloud and needs no confirmation.
+
+This consent does not authorize deletion of user files, overwriting unrecognized or user-modified publication directories, resolving ambiguous ownership, moving or modifying personal notes, destructive migration, use of files the user did not explicitly supply, or other unexpected side effects. Private mode must never upload to cloud or fall back to cloud.
+
 - Use `--course` and `--title` when supplied. Otherwise accept `_Inbox` when course inference is uncertain.
 - Use `--no-publish` when only the durable cache/catalog is wanted.
 - Use `--vault <existing-vault>` only for an explicitly selected vault. Never guess among multiple vaults.

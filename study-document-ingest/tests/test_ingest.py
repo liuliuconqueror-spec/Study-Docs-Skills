@@ -14,6 +14,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "ingest.py"
+SKILL = ROOT / "SKILL.md"
 SPEC = importlib.util.spec_from_file_location("study_document_ingest", SCRIPT)
 assert SPEC and SPEC.loader
 ingest = importlib.util.module_from_spec(SPEC)
@@ -223,6 +224,31 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual(pipeline.python_executable, Path(sys.executable).resolve())
         self.assertEqual(pipeline.mineru_script, self.fake.resolve())
         self.assertEqual(pipeline.chunker_script, self.fake.with_name("chunking.py").resolve())
+
+    def test_explicit_ingest_cloud_consent_boundary(self):
+        policy = SKILL.read_text(encoding="utf-8")
+        with self.subTest("explicit_uncached_quality_ingest"):
+            self.assertIn(
+                "Explicitly providing files and requesting ingestion constitutes consent to send "
+                "uncached documents to the configured MinerU cloud parser.",
+                policy,
+            )
+            self.assertIn("do not request a second confirmation", policy)
+        with self.subTest("cache_hit"):
+            self.assertIn(
+                "A compatible cache hit sends nothing to cloud and needs no confirmation.",
+                policy,
+            )
+        with self.subTest("private_mode"):
+            self.assertIn(
+                "Private mode must never upload to cloud or fall back to cloud.", policy
+            )
+        with self.subTest("destructive_or_ambiguous_operations"):
+            self.assertIn("This consent does not authorize deletion of user files", policy)
+            self.assertIn("overwriting unrecognized or user-modified publication directories", policy)
+            self.assertIn("resolving ambiguous ownership", policy)
+            self.assertIn("moving or modifying personal notes", policy)
+            self.assertIn("destructive migration", policy)
 
     def run_ingest(self, source: Path | None = None, **kwargs):
         return self.pipeline.ingest_file(
